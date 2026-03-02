@@ -22,6 +22,7 @@ const {
     REST, 
     Routes 
 } = require('discord.js');
+const http = require('http');
 
 const locales = require('./locales');
 
@@ -202,6 +203,15 @@ client.on(Events.InteractionCreate, async interaction => {
             });
         }
     }
+});
+
+// Simple HTTP server for Render Health Check
+const port = process.env.PORT || 10000;
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Ragnarok Bot is running!\n');
+}).listen(port, () => {
+    console.log(`--- Health Check Server listening on port ${port} ---`);
 });
 
 // Login
