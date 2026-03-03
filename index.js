@@ -18,9 +18,9 @@ const {
     EmbedBuilder, 
     StringSelectMenuBuilder,
     StringSelectMenuOptionBuilder,
-    ChannelType,
     REST, 
-    Routes 
+    Routes,
+    MessageFlags 
 } = require('discord.js');
 const http = require('http');
 
@@ -86,7 +86,7 @@ client.on(Events.InteractionCreate, async interaction => {
             await interaction.reply({
                 content: '⚔️ **Benvenuto a Ragnarok Esport / Welcome to Ragnarok Esport** ⚔️\nSeleziona la tua lingua per procedere con la candidatura / Select your language to proceed with the application.',
                 components: [row],
-                ephemeral: true
+                flags: [MessageFlags.Ephemeral]
             });
         }
     }
@@ -199,7 +199,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
             await interaction.reply({ 
                 content: t.success_msg, 
-                ephemeral: true 
+                flags: [MessageFlags.Ephemeral]
             });
         }
     }
