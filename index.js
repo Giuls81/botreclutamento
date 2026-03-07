@@ -65,10 +65,14 @@ client.once(Events.ClientReady, c => {
 
 // Event: Interaction Create
 client.on(Events.InteractionCreate, async interaction => {
+    console.log(`--- Interaction Received: ${interaction.type} from ${interaction.user.tag} ---`);
     
     // Handle Slash Commands
     if (interaction.isChatInputCommand()) {
         if (interaction.commandName === 'apply') {
+            // Defer reply to give the bot time to "wake up" on Render Free Tier
+            await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
+
             // Language Selection Menu
             const select = new StringSelectMenuBuilder()
                 .setCustomId('language_selector')
@@ -83,10 +87,9 @@ client.on(Events.InteractionCreate, async interaction => {
 
             const row = new ActionRowBuilder().addComponents(select);
 
-            await interaction.reply({
+            await interaction.editReply({
                 content: '⚔️ **Benvenuto a Ragnarok Esport / Welcome to Ragnarok Esport** ⚔️\nSeleziona la tua lingua per procedere con la candidatura / Select your language to proceed with the application.',
-                components: [row],
-                flags: [MessageFlags.Ephemeral]
+                components: [row]
             });
         }
     }
